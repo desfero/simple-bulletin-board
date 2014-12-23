@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "board_user",
+    "password": "root",
+    "database": "board",
+    "host": "crocus.arvixe.com",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "board_user",
+    "password": "root",
+    "database": "board",
+    "host": "crocus.arvixe.com",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "board_user",
+    "password": "root",
+    "database": "board",
+    "host": "crocus.arvixe.com",
+    "dialect": "mysql"
+  }
+}

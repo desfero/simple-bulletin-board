@@ -1,0 +1,33 @@
+extends shared/_layout
+
+block content
+  h2.no-margin Register
+  form.form-horizontal(action='/register', method='POST', name="form", novalidate)
+    h4 Create a new account.
+    hr
+    .form-group
+      label.col-md-2.control-label(for='UserName') User name
+      .col-md-4
+        input#UserName.form-control(name='username', type='text', value='', unique-username, required, ng-model="username", autofocus)
+        span.help-block(ng-show="form.username.$dirty && form.username.$error.required") Please choose a username
+        span.help-block(ng-show="form.username.$dirty && form.username.$error.isTaken") Username already taken
+        span.help-block(ng-show="form.username.$dirty && form.username.$error.invalidChars") Username may not contain any non-url-safe characters
+    .form-group
+      label.col-md-2.control-label(for='Email') Email
+      .col-md-4
+        input#Email.form-control(type="email", ng-model="email", unique-email, name="email", required)
+        span.help-block(ng-show="form.email.$dirty && form.email.$error.isTaken") Email already taken
+        span.help-block(ng-show="form.email.$dirty && form.email.$error.email") Email is invalid
+    .form-group
+      label.col-md-2.control-label(for='Password') Password
+      .col-md-4
+        input#Password.form-control(type="password", name="password", ng-model="password", required, match="verification")
+    .form-group
+      label.col-md-2.control-label(for='verification') Confirm password
+      .col-md-4
+        input.form-control(type="password", name="verification", id="verification", ng-model="verification", required, match="password")
+        span.help-block(ng-show="form.verification.$dirty && form.verification.$error.required") Please repeat your password
+        span.help-block(ng-show="form.verification.$dirty && form.verification.$error.match && !form.verification.$error.required") Passwords don't match
+    .form-group
+      .col-md-offset-2.col-md-10
+        input.btn.btn-primary(type='submit', value='Register', ng-disabled="form.$invalid")

@@ -1,0 +1,25 @@
+extends shared/_layout
+
+block content
+
+  h2.no-margin Log in
+  .row
+    .col-sm-8
+      section#loginForm
+        form.form-horizontal(action='/login', method='post', role='form')
+          h4 Use a local account to log in.
+          h5
+            a(href='/register') Register if you don't have a local account.
+          hr
+          .form-group
+            label.col-sm-2.control-label(for='UserName') User name
+            .col-sm-10
+              input#UserName.form-control(name='username', type='text', value='')
+          .form-group
+            label.col-sm-2.control-label(for='Password') Password
+            .col-sm-10
+              input#Password.form-control(name='password', type='password')
+          .form-group
+            .col-sm-offset-2.col-sm-10
+              input.btn.btn-primary(type='submit', value='Log in')
+              a(href='/resetpassword') Forgot password?

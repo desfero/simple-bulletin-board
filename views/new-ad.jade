@@ -1,0 +1,65 @@
+extends shared/_layout
+
+block content
+  form.form-horizontal(action="/new-ad", method="post", enctype="multipart/form-data")
+    .form-group
+      label.col-md-4.control-label(for="title") Tytul
+      .col-md-4
+        input#title.form-control.input-md(type="text", name="title", required="")
+    .form-group
+      label.col-md-4.control-label(for="category") Kategoria
+      .col-md-4
+        select#category.form-control(name="category")
+          option(value="1") Option one
+          option(value="2") Option two
+    .form-group
+      label.col-md-4.control-label(for="description") Opis
+      .col-md-4
+        textarea#description.form-control(name="description", style="height: 140px;") default text
+    .form-group
+      label.col-md-4.control-label.no-margin(for="imgmain") Zdjecie glowne
+      .col-md-4
+        input#imgmain.input-file(type="file", name="imgmain")
+    .form-group
+      label.col-md-4.control-label.no-margin(for="img1") Zdj. dodatkowe
+        br
+        small (maksymalnie 8)
+      .col-md-4
+        #input-file
+          .spacer-bottom
+            input#img1.input-file(type="file", name="img1")
+        button#add-file-input(type="button" class="btn btn-primary btn-sm")
+          span.glyphicon.glyphicon-plus
+    .form-group
+      label.col-md-4.control-label(for="localization") Lokalizacja
+      .col-md-4
+        input#localization.form-control.input-md(type="text", name="localization", required="")
+    .form-group
+      label.col-md-4.control-label(for="")
+      .col-md-4
+        button.btn.btn-success(name="") Dodaj ogłoszenie
+
+block scripts
+  script(type="text/javascript").
+    $(function() {
+      var inpudDiv = $('#input-file');
+      var i = $('#input-file div').size() + 1;
+      
+      $('#add-file-input').on('click', function() {
+        $('<div style="display: none;" class="spacer-bottom"><input style="float:left;" type="file" name="img' + i +'" accept="image/jpeg"/><button type="button" class="btn btn-danger btn-xs remove-file-input" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></div>')
+        .appendTo(inpudDiv).slideDown("fast");
+        i++;
+      });
+    
+      $(document).on('click', '.remove-file-input', function() {
+        if( i > 2 ) {
+          $(this).parent().slideUp("fast", function() {
+            $(this).remove();
+          });
+          
+          i--;  
+        }
+      });
+    });
+  
+  

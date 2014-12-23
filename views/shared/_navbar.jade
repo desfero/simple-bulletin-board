@@ -1,0 +1,28 @@
+.navbar.navbar-default.navbar-fixed-top
+  .container
+    .navbar-header
+      a.navbar-brand(href='../') Tablica
+
+      button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-main')
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+
+    #navbar-main.navbar-collapse.collapse
+      ul.nav.navbar-nav
+        li
+          a(href='/new-ad') Dodaj ogloszenie
+        li
+          a(href='http://news.bootswatch.com') Blog
+
+      ul.nav.navbar-nav.navbar-right
+        if user
+          li
+            a(href='/') Hi, #{user.username}
+          li
+            a(href='/logout') Logout
+        else
+          li
+            a(href='/login') Login
+          li
+            a(href='/register') Register
