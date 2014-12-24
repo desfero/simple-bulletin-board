@@ -1,0 +1,16 @@
+extends shared/_layout
+
+block content
+  h2.no-margin Dodaj nową kategorie
+  form.form-horizontal(action="/category/add" method="post" name="form" novalidate)
+    h4 Wpisz nazwe kategorii i wciśnin przycisk dodaj
+    hr
+    .form-group
+      label.col-md-2.control-label(for='CategoryName') Name
+      .col-md-4
+        input#CategoryName.form-control(name='categoryname', type='text', unique-category-name, required, ng-model="categoryname", autofocus)
+        span.help-block(ng-show="form.categoryname.$dirty && form.categoryname.$error.required") Prosze, wpisz nazwe kategorii
+        span.help-block(ng-show="form.categoryname.$dirty && form.categoryname.$error.isTaken") Kategoria o podanej nazwie juz istnieje
+    .form-group
+      .col-md-offset-2.col-md-10
+        input.btn.btn-default(type='submit', value='Dodaj', ng-disabled="form.$invalid")

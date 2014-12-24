@@ -11,18 +11,18 @@
     #navbar-main.navbar-collapse.collapse
       ul.nav.navbar-nav
         li
-          a(href='/new-ad') Dodaj ogloszenie
+          a(href='/board/add') Dodaj ogloszenie
         li
-          a(href='http://news.bootswatch.com') Blog
+          a(href='/category/add') Dodaj kategorie
 
       ul.nav.navbar-nav.navbar-right
         if user
           li
-            a(href='/') Hi, #{user.username}
+            a(href='/') Cześć, #{user.username}
           li
-            a(href='/logout') Logout
+            a(href='/logout') Wyloguj
         else
           li
-            a(href='/login') Login
+            a(href='/login') Zalogować
           li
-            a(href='/register') Register
+            a(href='/register') Zarejestrować

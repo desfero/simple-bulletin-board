@@ -1,4 +1,4 @@
-var app = angular.module('myApp', []);
+var app = angular.module('App', []);
 
 // http://stackoverflow.com/questions/12864887/angularjs-integrating-with-server-side-validation
 
@@ -59,6 +59,42 @@ app.directive('uniqueEmail', ['$http', function($http) {
 
         scope.busy = true;
         $http.post('/register/check/email', {email: value})
+        .success(function(data) {
+          // everything is fine -> do nothing
+          scope.busy = false;
+        })
+        .error(function(data) {
+
+          // display new error message
+          if (data.isTaken) {
+            ctrl.$setValidity('isTaken', false);
+          }
+
+          scope.busy = false;
+        });
+      })
+    }
+  }
+}]);
+
+app.directive('uniqueCategoryName', ['$http', function($http) {
+  return {
+    require: 'ngModel',
+    link: function(scope, elem, attrs, ctrl) {
+      scope.busy = false;
+      scope.$watch(attrs.ngModel, function(value) {
+
+        // hide old error messages
+        ctrl.$setValidity('isTaken', true);
+
+        if (!value) {
+          // don't send undefined to the server during dirty check
+          // empty username is caught by required directive
+          return;
+        }
+
+        scope.busy = true;
+        $http.post('/category/check/name', {categoryname: value})
         .success(function(data) {
           // everything is fine -> do nothing
           scope.busy = false;

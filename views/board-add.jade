@@ -1,0 +1,71 @@
+extends shared/_layout
+
+block content
+  h2.no-margin Dodaj nowe ogloszenie
+  form.form-horizontal(action="/new-ad", name="form", method="post", enctype="multipart/form-data", novalidate)
+    h4 Wypelnij ponizsze pola i wcisnij przycisk "Dodaj ogloszenie"
+    hr
+    .form-group
+      label.col-md-2.control-label(for="title") Tytul
+      .col-md-4
+        input#title.form-control.input-md(type="text", name="title", required, autofocus, ng-model="title")
+        span.help-block(ng-show="form.title.$dirty && form.title.$error.required") Prosze wpisz tytuł
+    .form-group
+      label.col-md-2.control-label(for="category") Kategoria
+      .col-md-4
+        select#category.form-control(name="category")
+          each cat in categories
+            option(value="#{cat.id}")= cat.name
+    .form-group
+      label.col-md-2.control-label(for="description") Opis
+      .col-md-4
+        textarea#description.form-control(name="description", ng-model="description", maxlength="2048", style="height: 140px", required) 
+        span.help-block(ng-show="form.description.$dirty") Zostalo ci {{2048 - description.length}} znakow
+        span.help-block(ng-show="form.description.$dirty && form.description.$error.required") Opis jest wymagany
+    .form-group
+      label.col-md-2.control-label.no-margin(for="imgmain") Zdjecie glowne
+      .col-md-4
+        input#imgmain.input-file(type="file", name="imgmain")
+    .form-group
+      label.col-md-2.control-label.no-margin(for="img1") Zdj. dodatkowe
+        br
+        small (maksymalnie 8)
+      .col-md-4
+        #input-file
+          .spacer-bottom
+            input#img1.input-file(type="file", name="img1")
+        button#add-file-input(type="button" class="btn btn-primary btn-sm")
+          span.glyphicon.glyphicon-plus
+    .form-group
+      label.col-md-2.control-label(for="location") Lokalizacja
+      .col-md-4
+        input#location.form-control.input-md(type="text", name="location", required="")
+    .form-group
+      label.col-md-2.control-label(for="")
+      .col-md-4
+        button.btn.btn-success(name="", ng-disabled="form.$invalid") Dodaj ogłoszenie
+
+block scripts
+  script(type="text/javascript").
+    $(function() {
+      var inpudDiv = $('#input-file');
+      var i = $('#input-file div').size() + 1;
+      
+      $('#add-file-input').on('click', function() {
+        $('<div style="display: none;" class="spacer-bottom"><input style="float:left;" type="file" name="img' + i +'" accept="image/jpeg"/><button type="button" class="btn btn-danger btn-xs remove-file-input" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></div>')
+        .appendTo(inpudDiv).slideDown("fast");
+        i++;
+      });
+    
+      $(document).on('click', '.remove-file-input', function() {
+        if( i > 2 ) {
+          $(this).parent().slideUp("fast", function() {
+            $(this).remove();
+          });
+          
+          i--;  
+        }
+      });
+    });
+  
+  

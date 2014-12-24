@@ -4,6 +4,9 @@ var models  = require('../models');
 var pass = require('pwd');
 var fs = require('fs');
 
+var appRoot = require('app-root-path');
+
+var mkdirp = require('mkdirp');
 var router = express.Router();
 
 /* GET home page. */
@@ -173,25 +176,100 @@ function logout(req, res){
   res.redirect('/');
 }
 
-router.get('/new-ad', function(req, res) {
-  res.render('new-ad', {title: 'Nowe Ogloszenie', user: req.user });
+router.get('/board/add', function(req, res) {
+  models.Category.findAll()
+  .success(function(categories) {
+    res.render('board-add', {title: 'Nowe Ogloszenie', user: req.user, categories: categories });
+  });
+
+
 });
 
-router.post('/new-ad', newAdPost);
+router.post('/board/add', newAdPost);
 function newAdPost(req, res, next) {
-  var fstream;
-  req.pipe(req.busboy);
-  req.busboy.on('file', function (fieldname, file, filename) {
-    if(fieldname == 'imgmain')
-    {
-      console.log("Uploading: " + filename);
-      fstream = fs.createWriteStream(__dirname + '/uploads/' + filename);
-      file.pipe(fstream);
-      fstream.on('close', function () {
-        res.redirect('/');
+  var board = models.Board.build({
+    title: req.body.title,
+    description: req.body.description,
+    location: req.body.location
+  })
+
+  board
+  .save()
+  .complete(function(err, board) {
+    if (err) {
+      console.log('The instance has not been saved:', err)
+    } else {
+      // appRoot determine an app's root path from anywhere inside the app
+      var uploadDir = appRoot + '/public/uploads/ad/' + board.id + '/';
+      var uploadMainDir = uploadDir + 'main/'
+
+      // Create needed directory before save images
+      mkdirp(uploadDir, function (err) {
+        if (err) console.error(err)
+      });
+
+      mkdirp(uploadMainDir, function (err) {
+        if (err) console.error(err)
+      });
+      // end
+
+      var fstream;
+      req.pipe(req.busboy);
+      req.busboy.on('file', function (fieldname, file, filename) {
+        if(fieldname == 'imgmain')
+        {
+          fstream = fs.createWriteStream(uploadDir + '/main/' + filename);
+          file.pipe(fstream);
+        }
+        else
+        {
+          fstream = fs.createWriteStream(uploadDir + filename);
+          file.pipe(fstream);
+        }
+      });
+
+      res.redirect('/');
+    }
+  })
+}
+
+router.get('/category/add', function(req, res) {
+  res.render('category-add', {title: "Dodaj nową kategorie", user: req.user });
+});
+
+router.post('/category/add', newCategory);
+function newCategory(req, res, next) {
+  var category = models.Category.build({
+    name: req.body.categoryname
+  })
+
+  category
+  .save()
+  .complete(function(err) {
+    if (err) {
+      console.log('The instance has not been saved:', err)
+    }
+
+    res.redirect('/');
+  });
+
+}
+
+router.post('/category/check/name', function(req, res) {
+  var categoryname = req.body.categoryname;
+  // check if email is already taken
+  return models.Category.find( { where: {name: categoryname}} )
+  .success(function(category) {
+    if (!category) {
+      console.log('No category with the name ' + categoryname + ' has been found.')
+      return res.send(200);
+    } else {
+      console.log('Category with name ' + categoryname + ' exist.')
+      return res.json(403, {
+        isTaken: true
       });
     }
-  });
-}
+  })
+});
 
 module.exports = router;
