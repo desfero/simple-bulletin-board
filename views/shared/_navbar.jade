@@ -1,7 +1,7 @@
 .navbar.navbar-default.navbar-fixed-top
   .container
     .navbar-header
-      a.navbar-brand(href='../') Tablica
+      a.navbar-brand(href='/') Sprzedam.pl
 
       button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-main')
         span.icon-bar
@@ -11,9 +11,9 @@
     #navbar-main.navbar-collapse.collapse
       ul.nav.navbar-nav
         li
-          a(href='/board/add') Dodaj ogloszenie
+          a(href='/nowe-ogloszenie'): span.ad-navbar Dodaj ogloszenie
         li
-          a(href='/category/add') Dodaj kategorie
+          a(href='/nowa-kategoria') Dodaj kategorie
 
       ul.nav.navbar-nav.navbar-right
         if user

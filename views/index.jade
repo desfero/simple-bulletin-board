@@ -1,21 +1,44 @@
 extends shared/_layout
 
 block content
+  .row(ng-controller='IndexController')
+    .col-md-9
+      .well.well-sm
+        .input-group
+          input.form-control(type="text", ng-model="search", ng-change="loadNew()", placeholder="Wpisz co chcesz znaleźć, a reszte zrobimy my...  (np. Telefon Nokia 515)")
+          span.input-group-addon
+            span.glyphicon.glyphicon-search
 
+      .sells(infinite-scroll='load()')
+        .sell-mini(ng-repeat="sell in sells")
+          .col-sm-3.col-xs-5.sell-mini-image: img.img-responsive(ng-src="{{sell.mainImg}}", alt="{{sell.title}}")
+          .col-sm-7.col-xs-7
+            h2.sell-mini-title: a(href="/sprzedam/{{sell.id}}") {{sell.title}}
+            span.sell-mini-category {{sell.Category.name}}
+            span.sell-mini-location {{sell.location}}
+          .col-xs-2.hidden-xs
+            .sell-mini-price {{sell.price}}
+              small(ng-show="sell.tonegotiate").sell-mini-tonegotiate Do negocjacji
+            span.sell-mini-date
+              {{sell.date}}
+              br
+              {{sell.time}}
+          .clearfix
 
-  div.container
-    div.content
-      table.table.table-striped
-        thead
-          tr
-            th Table
-            th Heading
-        tbody
-          tr
-            td Blah
-            td Test
-          tr
-            td Hello
-            td World
+    #sidebar.col-md-3
+      .well.well-sm
+        label.spacer-left-5(for="category") Kategoria:
+        select#category.form-control(ng-model="categoryId", ng-change="loadNew()", ng-init="categoryId = -1")
+          option(value="-1") Wszystkie
+          each category in categories
+            option(value="#{category.id}") #{category.name}
 
-  div.footer
+        .checkbox.spacer-left-5
+          label
+            input(type="checkbox", ng-change="loadNew()", ng-model="onlyFree")
+            | Tylko darmowe
+
+block scripts
+  script(src="../js/infinite-scroll.min.js")
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment-with-locales.min.js")
+  script(src="../js/indexCtrl.js")

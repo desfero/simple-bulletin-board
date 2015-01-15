@@ -6,7 +6,164 @@ var models = require("../models");
 app.set('port', process.env.PORT || 3000);
 
 models.sequelize.sync({force: true}).then(function() {
+  createDemoInstance();
+
   var server = app.listen(app.get('port'), function() {
     debug('Express server listening on port ' + server.address().port);
   });
 });
+
+function createDemoInstance() {
+  models.User.create(
+  {
+    username: "test",
+    hash: "cwr3baVAFjZr4o1dCPetZvnO9BtT4gMvNZ28UnMtm+pBHaFoiaw+z2r4/wtZd21U9w/rpBhpHhtZi884GQhEcSQzm/6XL9yYiDjHOjPeuv1tdnJ/rh4yD6TTLfiW9MW43ZdwjaiFkyx/669CxaLVV0sXyw2zF3pyFrnk/hGBQuE=",
+    salt: "YsCxq+vb6I+2bsC2rMWtRxYJoifC7GGGm+G8vviF3yYKA9TbVchS91zXyD6a8wXTutacfOI9x7uiD3D0sKfdTr6HyCn4ogyg4fWY7OctDRXNUfh7BPmOpNzC+MTehUHvYPjgnLVwQ5sVffO1avrrznpjdgFW07aGMBZl6pHZ1BA=",
+    email: "pavloblack@hotmail.com"
+  });
+
+  models.Category.create({
+    name: "Telefony komórkowe"
+  });
+
+  models.Category.create({
+    name: "Samochody osobowe"
+  });
+
+  models.Category.create({
+    name: "Meble"
+  });
+
+  models.Sell
+  .create({
+    title: "Telefon Nokia 515",
+    description: "Sprzedam telefon Nokia 515 ,kolor czarny ,telefon jest na gwarancji.",
+    location: "Chorzenice",
+    price: "410",
+    tonegotiate: false,
+    date: new Date("2014-12-25"),
+    CategoryId: 1,
+    UserId: 1
+  });
+
+  models.Sell
+  .create({
+    title: "Nowy iPhone 5 32GB bez simlocka Kolor czarny",
+    description: "Witam, mam na sprzedanie nowe iPhone 5 32GB w kolorze czarnym i białym , posiadam nowe iPhony , są oryginalne prosto z apple store. Posiadma do nich pudełko ,kabel usb,słuchakwi i łądowarke.",
+    location: "Olsztyn",
+    price: "1 650",
+    tonegotiate: true,
+    date: new Date(),
+    CategoryId: 1,
+    UserId: 1
+  });
+
+  models.Sell
+  .create({
+    title: "Alcatel One Touch Idol Ultra 6033X",
+    description: "WITAM! Na sprzedaż posiadam używany telefon ALCATEL ONE TOUCH IDOL ULTRA",
+    location: "Bieruń Stary",
+    price: "449",
+    tonegotiate: false,
+    date: new Date("2014-10-14"),
+    CategoryId: 1,
+    UserId: 1
+  });
+
+  models.Sell
+  .create({
+    title: "Rover 45 1.6 zadbany, 2000 r.",
+    description: "Sprzedam zadbanego Rovera 45 z 2000 r., bezwypadkowy",
+    location: "Poznań, Grunwald",
+    price: "4 600",
+    tonegotiate: false,
+    date: new Date(),
+    CategoryId: 2,
+    UserId: 1
+  });
+
+  models.Sell
+  .create({
+    title: "Volkswagen Passat 2002",
+    description: "Sprzedaje tak jak w opisie stan bdb.nie wymaga wkładu finansowego.po wymianie rozrządu",
+    location: "Zawiercie",
+    price: "13 500",
+    tonegotiate: true,
+    date: new Date(),
+    CategoryId: 2,
+    UserId: 1
+  });
+
+  models.Sell
+  .create({
+    title: "Biurko młodzieżowe z płyty meblowej",
+    description: "Do oddania beżowe biurko młodzieżowe z płyty meblowej. Mebel jest używany, ale w dobrym stanie. ",
+    location: "Radom",
+    price: "free",
+    tonegotiate: false,
+    date: new Date("2014-10-01"),
+    CategoryId: 3,
+    UserId: 1
+  });
+
+  models.Sell
+  .create({
+    title: "Rover 45 1.6 zadbany, 2000 r.",
+    description: "Sprzedam zadbanego Rovera 45 z 2000 r., bezwypadkowy",
+    location: "Poznań, Grunwald",
+    price: "4 600",
+    tonegotiate: false,
+    date: new Date(),
+    CategoryId: 2,
+    UserId: 1
+  });
+
+  models.Sell
+  .create({
+    title: "Telefon Nokia 515",
+    description: "Sprzedam telefon Nokia 515 ,kolor czarny ,telefon jest na gwarancji.",
+    location: "Chorzenice",
+    price: "410",
+    tonegotiate: false,
+    date: new Date(),
+    CategoryId: 1,
+    UserId: 1
+  });
+
+  models.Sell
+  .create({
+    title: "Telefon Nokia 515",
+    description: "Sprzedam telefon Nokia 515 ,kolor czarny ,telefon jest na gwarancji.",
+    location: "Chorzenice",
+    price: "410",
+    tonegotiate: false,
+    date: new Date("2015-10-15"),
+    CategoryId: 1,
+    UserId: 1
+  });
+
+  models.Sell
+  .create({
+    title: "Volkswagen Passat 2002",
+    description: "Sprzedaje tak jak w opisie stan bdb.nie wymaga wkładu finansowego.po wymianie rozrządu",
+    location: "Zawiercie",
+    price: "13 500",
+    tonegotiate: true,
+    date: new Date(),
+    CategoryId: 2,
+    UserId: 1
+  });
+
+  models.Sell
+  .create({
+    title: "Biurko młodzieżowe z płyty meblowej",
+    description: "Do oddania beżowe biurko młodzieżowe z płyty meblowej. Mebel jest używany, ale w dobrym stanie. ",
+    location: "Radom",
+    price: "free",
+    tonegotiate: false,
+    date: new Date(),
+    CategoryId: 3,
+    UserId: 1
+  });
+
+}

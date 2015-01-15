@@ -1,0 +1,109 @@
+extends ../shared/_layout
+
+block map
+  #googleMapResizer
+    #googleMap
+
+block content
+  .row
+    .col-md-9.spacer-top
+      h2.no-margin #{sell.title}
+      .sell-info
+        .pull-left
+          span.glyphicon.glyphicon-map-marker.marker
+          span#location.marker-text.like-a #{sell.location}
+          span.spacer-horizontal
+          span.glyphicon.glyphicon-list-alt.marker
+          span.marker-text #{sell.Category.name}
+          span.spacer-horizontal
+        .pull-right
+          span.glyphicon.glyphicon-calendar.marker
+          span.marker-text #{sell.date} o #{sell.time}
+        .clearfix
+
+
+      #carousel-custom.carousel.slide(data-ride='carousel')
+        .carousel-outer
+          .carousel-inner.sell-carousel
+            .item.active
+              img(src="#{sell.mainImg}", alt="#{sell.title}")
+            each img in sell.images
+              .item
+                img(src="#{img}", alt="#{sell.title}")
+          if sell.images.length > 0
+            a.left.carousel-control(href='#carousel-custom', data-slide='prev')
+              span.glyphicon.glyphicon-chevron-left
+            a.right.carousel-control(href='#carousel-custom', data-slide='next')
+              span.glyphicon.glyphicon-chevron-right
+        ol.carousel-indicators.mCustomScrollbar
+          li.active(data-target='#carousel-custom', data-slide-to="0")
+            img(src="#{sell.mainImg}", alt="#{sell.title}")
+          each img, index in sell.images
+            li(data-target='#carousel-custom', data-slide-to="#{index + 1}")
+              img(src="#{img}", alt="#{sell.title}")
+
+      h3 Informacje od sprzedającego
+      p #{sell.description}
+
+    .col-md-3#sidebar
+      .sell-sidebar
+        .sell-price-box.visible-md.visible-lg #{sell.price}
+        .sell-price-box-sm.hidden-md.hidden-lg #{sell.price}
+        p.spacer-top.text-center Skontaktuj się:
+        .sell-contact-box.spacer-top
+          button.btn.btn-success(type="button")
+            span.glyphicon.glyphicon-envelope.button-icon
+            | Napisz wiadomosc
+        .sell-user-information Informacje o użytkowniku
+
+block head
+  link(rel="stylesheet", href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css")
+
+block scripts
+  script(src="/js/jquery.resize.js")
+  script(src="http://code.jquery.com/ui/1.10.4/jquery-ui.js")
+  script.
+    $(function() {
+      $("#googleMapResizer").resizable({ handles: 'n, s', maxHeight: 800, minHeight: 150 });
+    });
+  script(src="http://maps.googleapis.com/maps/api/js")
+  script.
+    function initialize() {
+      var geocoder = new google.maps.Geocoder();
+
+      var location = $('#location').text();
+      geocoder.geocode({ 'address': location }, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          var center = results[0].geometry.location;
+
+          var mapProp = {
+            center: center,
+            zoom: 9,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+          var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+          var marker=new google.maps.Marker({
+            position: center,
+          });
+          marker.setMap(map);
+
+          var mapCenter = map.getCenter();
+
+          google.maps.event.addListener(map, 'idle', function(){
+            mapCenter = map.getCenter();
+          });
+
+          $('#location').on('click', function() {
+            map.panTo(center);
+          });
+
+          $('#googleMapResizer').resize(function() {
+            google.maps.event.trigger(map, "resize");
+
+            map.panTo(mapCenter);
+          });
+        }
+      });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);

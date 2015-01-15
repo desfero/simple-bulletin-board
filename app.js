@@ -4,14 +4,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
 var pass = require('pwd');
 
+// Simple session middleware for Express
 var session = require('express-session')
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-
-var busboy = require('connect-busboy');
 
 var models  = require('./models');
 
@@ -60,13 +60,14 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+app.disable('view cache');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(busboy());
+// app.use(busboy());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -83,7 +84,7 @@ app.use(passport.session());
 // Session-persisted message middleware
 app.use(function(req, res, next){
   var err = req.session.error,
-  msg = req.session.notice,
+  notice = req.session.notice,
   success = req.session.success;
 
   delete req.session.error;
@@ -91,7 +92,7 @@ app.use(function(req, res, next){
   delete req.session.notice;
 
   if (err) res.locals.error = err;
-  if (msg) res.locals.notice = msg;
+  if (notice) res.locals.notice = notice;
   if (success) res.locals.success = success;
 
   next();
@@ -128,6 +129,5 @@ app.use(function(err, req, res, next) {
     error: err
   });
 });
-
 
 module.exports = app;

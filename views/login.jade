@@ -2,24 +2,25 @@ extends shared/_layout
 
 block content
 
-  h2.no-margin Log in
+  h2.no-margin Zaluguj się, aby moc w pelni korzystać z serwisu
   .row
     .col-sm-8
       section#loginForm
         form.form-horizontal(action='/login', method='post', role='form')
-          h4 Use a local account to log in.
+          h4 Wykorzystaj swoje lokalne konto, aby się zalogować
           h5
-            a(href='/register') Register if you don't have a local account.
+            a(href='/register') Zarejestruj się, jeżeli nie masz jeszcze konta
           hr
           .form-group
-            label.col-sm-2.control-label(for='UserName') User name
+            label.col-sm-2.control-label(for='UserName') Login
             .col-sm-10
               input#UserName.form-control(name='username', type='text', value='')
           .form-group
-            label.col-sm-2.control-label(for='Password') Password
+            label.col-sm-2.control-label(for='Password') Haslo
             .col-sm-10
               input#Password.form-control(name='password', type='password')
           .form-group
             .col-sm-offset-2.col-sm-10
-              input.btn.btn-primary(type='submit', value='Log in')
-              a(href='/resetpassword') Forgot password?
+              input.btn.btn-primary(type='submit', value='Wejdz')
+              &nbsp;&nbsp;&nbsp;
+              a(href='/resetpassword') Zapomniales haslo?

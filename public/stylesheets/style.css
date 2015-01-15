@@ -1,13 +1,271 @@
+html {
+  position: relative;
+  min-height: 100%;
+  overflow-y: scroll;
+}
 body {
-  padding-top: 90px;
+  padding-top: 55px;
+  padding-bottom: 60px;
 }
 
 .no-margin {
-  margin: 0 !important;
-  padding: 0 !important;
+  margin:0!important;
+  padding:0!important;
 }
 
-.spacer-bottom
-{
-  margin-bottom: 15px;
+.spacer-bottom {
+  margin-bottom:15px;
+}
+
+.spacer-top {
+  margin-top:15px;
+}
+
+.spacer-left-5 {
+  margin-left: 5px;
+}
+
+.spacer-horizontal {
+  margin: 0 10px;
+}
+
+#sidebar {
+  padding-left: 5px;
+}
+
+/* Carousel */
+#carousel-custom {
+  margin: 20px auto;
+}
+#carousel-custom .carousel-indicators {
+  margin: 10px 0 0;
+  overflow: auto;
+  position: static;
+  text-align: left;
+  white-space: nowrap;
+  width: 100%;
+}
+#carousel-custom .carousel-indicators li {
+  background-color: transparent;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  display: inline-block;
+  height: auto;
+  margin: 0 !important;
+  width: auto;
+}
+#carousel-custom .carousel-indicators li img {
+  max-width: 100px;
+  max-height: 100px;
+  display: block;
+  opacity: 0.5;
+}
+#carousel-custom .carousel-indicators li.active img {
+  opacity: 1;
+}
+#carousel-custom .carousel-indicators li:hover img {
+  opacity: 0.75;
+}
+#carousel-custom .carousel-outer {
+  position: relative;
+}
+
+.ad-navbar {
+  padding: 6px 15px;
+  color: white;
+
+  -moz-border-radius-topleft: 50px;
+  -webkit-border-top-left-radius: 50px;
+  border-top-left-radius: 50px;
+  -moz-border-radius-topright: 20px;
+  -webkit-border-top-right-radius: 20px;
+  border-top-right-radius: 20px;
+  -moz-border-radius-bottomright: 50px;
+  -webkit-border-bottom-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  -moz-border-radius-bottomleft: 20px;
+  -webkit-border-bottom-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  background: #BADA55;
+}
+
+.ad-navbar:hover {
+  background: #A7C44C;
+}
+
+.marker {
+  font-size:20px;
+}
+
+.marker-text {
+  font-size:13px;
+  margin-left:5px;
+  vertical-align:3px;
+}
+
+#googleMapResizer {
+  background: url("../images/Google_maps_logo.png") center no-repeat;
+  margin-top: -14px;
+  height: 150px;
+  border-top: 1px solid #b9cd6d;
+}
+
+#googleMap {
+  height: 100%;
+  border-bottom: 4px solid #66CCFF;
+}
+
+.sell-carousel img {
+  max-width: 500px;
+  max-height: 500px;
+  margin: 0 auto;
+}
+
+.sell-sidebar {
+}
+
+.sell-info {
+  background:#FFF;
+  margin: 20px 0;
+  padding: 12px 18px;
+
+  position:relative;
+  -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.2);
+  box-shadow:0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.like-a {
+  color: #d9230f;
+  text-decoration: none;
+  cursor: pointer;
+}
+.like-a:hover, .like-a:focus {
+  color: #91170a;
+  text-decoration: underline;
+
+}
+
+.sell-price-box, .sell-price-box-sm {
+  background:#6CF;
+  color:#FFF;
+  font-size: 40px;
+  font-weight: bold;
+  padding: 28px 0;
+  text-align:center;
+
+}
+
+.sell-price-box {
+  -webkit-border-bottom-right-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  -moz-border-radius-bottomright: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.sell-price-box-sm {
+  border-radius: 5px;
+}
+
+.button-icon {
+  vertical-align: -1px;
+  margin-right: 5px;
+}
+
+.sell-contact-box {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background: #e8e8e8;
+  text-align: center;
+  padding: 15px;
+}
+
+.sell-user-information {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Styles for sell mini on the index page */
+
+.sell-mini {
+  background:#FFF;
+  margin-bottom: 20px;
+  padding: 12px 0;
+
+  position:relative;
+  -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.2);
+  box-shadow:0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.sell-mini:hover {
+  background:#FAFAFA;
+}
+
+.sell-mini .sell-mini-image {
+  border-right: 1px solid #E6E6E6;
+}
+
+.sell-mini .sell-mini-title {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+.sell-mini .sell-mini-category {
+  display: block;
+  font-size: 15px;
+}
+
+.sell-mini .sell-mini-location {
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.sell-mini .sell-mini-price {
+  background:#6CF;
+  padding: 10px 0;
+  color:#FFF;
+  text-align: center;
+  margin-right: -17px;
+  font-size:16px;
+  margin-top: 10px;
+  font-weight: bold;
+
+  -webkit-border-top-left-radius: 50px;
+  -webkit-border-bottom-left-radius: 50px;
+  -moz-border-radius-topleft: 50px;
+  -moz-border-radius-bottomleft: 50px;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+}
+
+.sell-mini .sell-mini-tonegotiate {
+  display:block;
+  color: #FAFAFA;
+  font-size: 10px;
+  font-weight: normal;
+}
+
+.sell-mini .sell-mini-date {
+ display: block;
+ text-align: center;
+ margin-top: 12px;
+ padding-left: 10px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+.footer .container .text-muted {
+  margin: 20px 0;
 }

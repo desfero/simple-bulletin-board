@@ -5,10 +5,13 @@ html(ng-app="App")
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    block head
   body
     include _navbar.jade
-    #content.container
-      if error  
+
+    block map
+    .container
+      if error
         .alert.alert-danger.alert-dismissable
           button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
           = error
@@ -20,11 +23,14 @@ html(ng-app="App")
         .alert.alert-info.alert-dismissable
           button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
           = notice
-    
+
       block content
-      
+
+    include _footer.jade
+
     script(src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
     script(src='/bootstrap/js/bootstrap.min.js')
     script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular.min.js')
     script(src='/js/script.js')
+
     block scripts

@@ -1,0 +1,120 @@
+extends ../shared/_layout
+
+block content
+  h2.no-margin Formularz dodania nowego ogłoszenia
+  
+  form.form-horizontal.spacer-top(action="/nowe-ogloszenie", name="form", method="post", enctype="multipart/form-data", novalidate)
+    .well
+      h3.no-margin Wypelnij poniższe pola i wcisnij przycisk "Dodaj ogloszenie"
+      hr
+      .form-group
+        label.col-md-2.control-label(for="title") Tytul
+          span.text-danger *
+        .col-md-6
+          input#title.form-control(type="text", name="title", maxlength="70", autofocus, ng-requeired="true", ng-model="title")
+          span.help-block(ng-cloak) Zostalo ci {{70 - title.length}} znakow
+          span.help-block(ng-show="form.title.$dirty && form.title.$error.required") Tytul jest wymagany
+      .form-group
+        label.col-md-2.control-label(for="category") Kategoria
+          span.text-danger *
+        .col-md-4
+          select#category.form-control(name="category")
+            each cat in categories
+              option(value="#{cat.id}")= cat.name
+      .form-group
+        label.col-md-2.control-label(for="description") Opis
+          span.text-danger *
+        .col-md-6
+          textarea#description.form-control(name="description", maxlength="2048", style="height: 200px", ng-required="true", ng-model="description") 
+          span.help-block(ng-cloak) Zostalo ci {{2048 - description.length}} znakow
+          span.help-block(ng-show="form.description.$dirty && form.description.$error.required") Opis jest wymagany
+      hr
+      .form-group
+        label.col-md-2.control-label.no-margin(for="imgmain") Zdjecie glowne
+          span.text-danger *
+        .col-md-4
+          input#imgmain.input-file(type="file", name="imgmain", ng-model="imgmain", valid-file, required, accept="image/jpeg")
+      .form-group
+        label.col-md-2.control-label.no-margin(for="img1") Zdj. dodatkowe
+          br
+          small (maksymalnie 8)
+        .col-md-4(ng-init="amount=1")
+          #input-file
+            .spacer-bottom  
+              input#img1.input-file(type="file", name="img1", accept="image/jpeg")
+          button#add-file-input(type="button", class="btn btn-primary btn-sm")
+            span.glyphicon.glyphicon-plus
+      hr
+      .form-group(ng-controller="datepickerController")
+        label.col-md-2.control-label(for="date") Data wystawienia
+          span.text-danger *
+        .col-md-3
+          p.input-group
+            input(type="text", class="form-control", name="date" show-button-bar="false", datepicker-popup="{{format}}", ng-model="dt", ng-click="open($event)", is-open="opened", min-date="minDate", max-date="maxDate", datepicker-options="dateOptions", ng-required="true")
+            span.input-group-btn
+              button(type="button", class="btn btn-default", ng-click="open($event)")
+                i.glyphicon.glyphicon-calendar 
+          span.help-block(ng-show="form.date.$dirty && form.date.$error.required") Data jest nieprawidlowa
+      hr
+      .form-group
+        label.col-md-2.control-label(for="price") Cena
+          span.text-danger *
+        .col-md-6
+          .row
+            .col-xs-6
+              .input-group
+                input#price.form-control(type="text", maxlength="10", ng-pattern="/^0|[1-9][0-9]*$/", name="price", ng-model="price", ng-required="!forfree", ng-disabled="forfree")
+                .input-group-addon zł
+            .col-xs-6
+              .checkbox
+                label
+                  input(type="checkbox", name="tonegotiate", ng-disabled="forfree")
+                  = "do negocjacji"
+          span.help-block(ng-show="form.price.$dirty && form.price.$error.pattern") Hm, cos nie tak z cena
+          .checkbox
+            label
+              input(type="checkbox", name="forfree", ng-model="forfree")
+              = "Za darmo"    
+          span.help-block(ng-show="form.price.$dirty && form.price.$error.required") Wpisz cene albo oddaj za darmo
+      hr
+      .form-group(ng-controller="locationController")
+        label.col-md-2.control-label(for="location") Lokalizacja
+          span.text-danger *
+        .col-md-4
+          input#location.form-control(type="text", autocomplete="off", name="location", typeahead="address for address in getLocation($viewValue)", ng-model="location",  ng-required="true")
+      hr
+      .form-group
+        label.col-md-2.control-label
+        .col-md-4
+          button.btn.btn-success(name="", ng-disabled="form.$invalid") Dodaj ogłoszenie
+                
+block scripts
+  script(type="text/javascript", src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.0.js")
+  script(type="text/javascript", src="../js/newAdCtrls.js")
+  script(type="text/javascript").
+    $(function() {
+      var r = $('#input-file');
+      var addFileButton = $('#add-file-input');
+      var i = $('#input-file div').length;
+      
+      $('#add-file-input').on('click', function() {
+        $('<div style="display: none;" class="spacer-bottom"><input style="float:left;" type="file" name="img' + i +'" accept="image/jpeg"/><button type="button" class="btn btn-danger btn-xs remove-file-input" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></div>')
+        .appendTo("#input-file").slideDown("fast");
+        
+        ++i;
+        if(i == 8) {
+          $(addFileButton).attr("disabled", true);
+        }
+      });
+    
+      $(document).on('click', '.remove-file-input', function() {
+        $(this).parent().slideUp("fast", function() {
+          $(this).remove();
+        });
+          
+        i--;  
+        $(addFileButton).attr("disabled", false);      
+      });
+    });
+  
+  
